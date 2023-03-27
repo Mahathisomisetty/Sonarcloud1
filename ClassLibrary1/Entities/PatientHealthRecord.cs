@@ -5,7 +5,7 @@ namespace EntityFrame.Entities;
 
 public partial class PatientHealthRecord
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     public DateTime? DateTime { get; set; }
 
@@ -13,7 +13,7 @@ public partial class PatientHealthRecord
 
     public string? DoctorId { get; set; }
 
-    public string? AppointmentId { get; set; }
+    public string AppointmentId { get; set; } = null!;
 
     public string? Conclusion { get; set; }
 

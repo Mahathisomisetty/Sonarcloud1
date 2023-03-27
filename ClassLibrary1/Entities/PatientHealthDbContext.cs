@@ -33,46 +33,47 @@ public partial class PatientHealthDbContext : DbContext
     {
         modelBuilder.Entity<PatientAllergy>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PatientA__3214EC07310CFB90");
+            entity.HasKey(e => e.Id).HasName("PK__PatientA__3214EC077C77ECBE");
 
             entity.ToTable("PatientAllergy");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.AppointmentId).HasColumnName("Appointment_Id");
-            entity.Property(e => e.HealthId)
+            entity.Property(e => e.AppointmentId)
                 .HasMaxLength(100)
-                .HasColumnName("Health_Id");
+                .HasColumnName("Appointment_Id");
+            entity.Property(e => e.HealthId).HasColumnName("Health_Id");
 
-            entity.HasOne(d => d.Health).WithMany(p => p.PatientAllergies)
-                .HasForeignKey(d => d.HealthId)
+            entity.HasOne(d => d.Appointment).WithMany(p => p.PatientAllergies)
+                .HasForeignKey(d => d.AppointmentId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Fk_PatientAllergy");
         });
 
         modelBuilder.Entity<PatientBasicRecord>(entity =>
         {
-            entity.HasKey(e => e.PatientId).HasName("PK__PatientB__C1A88B79804ECD0A");
+            entity.HasKey(e => e.AppointmentId).HasName("PK__PatientB__FD01B523DCBCD2B7");
 
             entity.ToTable("PatientBasicRecord");
 
-            entity.Property(e => e.PatientId)
+            entity.Property(e => e.AppointmentId)
                 .HasMaxLength(100)
-                .HasColumnName("Patient_Id");
-            entity.Property(e => e.AppointmentId).HasColumnName("Appointment_Id");
+                .HasColumnName("Appointment_Id");
             entity.Property(e => e.BloodGroup).HasColumnName("Blood_Group");
             entity.Property(e => e.DateTime).HasColumnType("smalldatetime");
             entity.Property(e => e.HeartRate).HasColumnName("Heart_Rate");
             entity.Property(e => e.NurseId).HasColumnName("Nurse_Id");
+            entity.Property(e => e.PatientId).HasColumnName("Patient_Id");
         });
 
         modelBuilder.Entity<PatientHealthRecord>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PatientH__3214EC07EA5C2FEC");
+            entity.HasKey(e => e.AppointmentId).HasName("PK__PatientH__FD01B52394F0B579");
 
             entity.ToTable("PatientHealthRecord");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.AppointmentId).HasColumnName("Appointment_Id");
+            entity.Property(e => e.AppointmentId)
+                .HasMaxLength(100)
+                .HasColumnName("Appointment_Id");
             entity.Property(e => e.DateTime).HasColumnType("smalldatetime");
             entity.Property(e => e.DoctorId).HasColumnName("Doctor_Id");
             entity.Property(e => e.PatientId).HasColumnName("Patient_Id");
@@ -80,32 +81,36 @@ public partial class PatientHealthDbContext : DbContext
 
         modelBuilder.Entity<PatientMedication>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PatientM__3214EC077E76D0F6");
+            entity.HasKey(e => e.Id).HasName("PK__PatientM__3214EC078E5ADDEC");
 
             entity.ToTable("PatientMedication");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.AppointmentId).HasColumnName("Appointment_Id");
+            entity.Property(e => e.AppointmentId)
+                .HasMaxLength(100)
+                .HasColumnName("Appointment_Id");
             entity.Property(e => e.HealthId).HasColumnName("Health_Id");
 
-            entity.HasOne(d => d.Health).WithMany(p => p.PatientMedications)
-                .HasForeignKey(d => d.HealthId)
+            entity.HasOne(d => d.Appointment).WithMany(p => p.PatientMedications)
+                .HasForeignKey(d => d.AppointmentId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Fk_patientmedication");
         });
 
         modelBuilder.Entity<PatientTest>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PatientT__3214EC073B6A3769");
+            entity.HasKey(e => e.Id).HasName("PK__PatientT__3214EC079EDCFE1D");
 
             entity.ToTable("PatientTest");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.AppointmentId).HasColumnName("Appointment_Id");
+            entity.Property(e => e.AppointmentId)
+                .HasMaxLength(100)
+                .HasColumnName("Appointment_Id");
             entity.Property(e => e.HealthId).HasColumnName("Health_Id");
 
-            entity.HasOne(d => d.Health).WithMany(p => p.PatientTests)
-                .HasForeignKey(d => d.HealthId)
+            entity.HasOne(d => d.Appointment).WithMany(p => p.PatientTests)
+                .HasForeignKey(d => d.AppointmentId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Fk_patientTest");
         });
